@@ -1,0 +1,9 @@
+{% extends "events/base.html" %}
+{% block title %}My registrations · CodeAlpha{% endblock %}
+{% block content %}
+<section class="registrations-wrap"><div class="eyebrow"><span class="eyebrow-dot"></span> YOUR CALENDAR, SORTED</div><h1>My <span class="heading-light">registrations.</span></h1><p class="registrations-intro">All the good things you’ve said yes to.</p>
+{% if registrations %}<div class="registration-list">{% for registration in registrations %}
+<article class="registration-row"><div class="registration-date"><strong>{{ registration.event.starts_at|date:"d" }}</strong><span>{{ registration.event.starts_at|date:"M" }}</span></div><div class="registration-copy"><span class="event-date">{{ registration.event.category }} · {{ registration.event.starts_at|date:"l, g:i A" }}</span><h2><a href="{% url 'event-detail' registration.event.slug %}">{{ registration.event.title }}</a></h2><span>↗ &nbsp;{{ registration.event.location }}</span></div><div class="registration-actions"><span class="status-pill status-{{ registration.status }}">{{ registration.get_status_display }}</span>{% if registration.status == "confirmed" %}<form method="post" action="{% url 'cancel-registration' registration.pk %}">{% csrf_token %}<button class="text-button" type="submit">Cancel registration</button></form>{% endif %}</div></article>
+{% endfor %}</div>{% else %}<div class="empty-state"><span>✳</span><h3>Your calendar’s wide open.</h3><p>Discover an event and make a plan to be there.</p><a class="button" href="{% url 'home' %}#events">Find an event <span>↗</span></a></div>{% endif %}
+</section>
+{% endblock %}

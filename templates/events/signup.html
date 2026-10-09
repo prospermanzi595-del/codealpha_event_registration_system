@@ -1,0 +1,11 @@
+{% extends "events/base.html" %}
+{% block title %}Create an account · CodeAlpha{% endblock %}
+{% block content %}
+<section class="auth-wrap"><div class="auth-decoration"><span class="auth-orbit"></span><span class="auth-star">✳</span><div><span>YOUR NEXT STORY</span><strong>Starts with<br>a hello.</strong></div></div>
+<div class="auth-panel"><div class="eyebrow"><span class="eyebrow-dot"></span> JOIN THE COMMUNITY</div><h1>Come on in.</h1><p>Make an account, save your spot, and find your people.</p>
+<form method="post" class="form-stack">{% csrf_token %}
+  {% for field in form %}<label class="field"><span>{{ field.label }}</span>{{ field }}{% if field.errors %}<small class="field-error">{{ field.errors|striptags }}</small>{% endif %}{% if field.help_text %}<small class="field-help">{{ field.help_text|safe }}</small>{% endif %}</label>{% endfor %}
+  {% if form.non_field_errors %}<div class="field-error">{{ form.non_field_errors|striptags }}</div>{% endif %}
+  <button class="button button-full" type="submit">Create my account <span>↗</span></button>
+</form><p class="auth-switch">Already part of the community? <a href="{% url 'login' %}">Sign in</a></p></div></section>
+{% endblock %}

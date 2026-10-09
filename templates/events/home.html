@@ -1,0 +1,54 @@
+{% extends "events/base.html" %}
+{% block title %}Discover events · CodeAlpha{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-content">
+    <div class="eyebrow"><span class="eyebrow-dot"></span> YOUR CITY, A LITTLE MORE CONNECTED</div>
+    <h1>Make room for<br>something <span class="accent">remarkable.</span></h1>
+    <p class="hero-copy">The people, ideas, and experiences worth showing up for. Find your next favorite thing.</p>
+    <a class="button" href="#events">Explore what’s on <span aria-hidden="true">↓</span></a>
+    <div class="hero-note"><span class="avatar-stack"><i>A</i><i>K</i><i>M</i></span><span>Good things happen when we get together.</span></div>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <div class="art-ring art-ring-one"></div><div class="art-ring art-ring-two"></div>
+    <div class="art-orb"></div><div class="art-star">✳</div>
+    <div class="art-note note-top"><span>01 — FIND YOUR PEOPLE</span><span>↗</span></div>
+    <div class="art-note note-bottom"><span>SHOW UP. STAY CURIOUS.</span><span>✦</span></div>
+    <div class="art-ticket"><span>OPEN INVITATION</span><strong>There’s a<br>seat for you.</strong><span class="ticket-arrow">↗</span></div>
+  </div>
+  <div class="hero-side-label">MEET HERE · MAKE SOMETHING HAPPEN</div>
+</section>
+<section class="events-section" id="events">
+  <div class="section-heading">
+    <div><div class="eyebrow"><span class="eyebrow-dot"></span> THE GOOD STUFF</div><h2>Coming up <span class="heading-light">near you.</span></h2></div>
+    <span class="section-count">{{ events|length|stringformat:"02d" }} <span>UP NEXT</span></span>
+  </div>
+  {% if events %}
+  <div class="event-grid">
+    {% for event in events %}
+    <article class="event-card">
+      <a href="{% url 'event-detail' event.slug %}" class="event-visual visual-{{ forloop.counter0|divisibleby:4|yesno:'one,two' }}">
+        <span class="event-category">{{ event.category }}</span>
+        <span class="visual-number">0{{ forloop.counter }}</span>
+        <span class="visual-spark">✳</span>
+        <span class="visual-caption">GOOD ENERGY<br>GUARANTEED</span>
+      </a>
+      <div class="event-info">
+        <div class="event-date">{{ event.starts_at|date:"D, M j · g:i A" }}</div>
+        <h3><a href="{% url 'event-detail' event.slug %}">{{ event.title }}</a></h3>
+        <p>{{ event.summary }}</p>
+        <div class="event-bottom"><span>↗ &nbsp;{{ event.location }}</span><a href="{% url 'event-detail' event.slug %}" aria-label="View {{ event.title }}">→</a></div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state"><span>✳</span><h3>Something good is on its way.</h3><p>Our next events are being planned right now. Check back soon.</p></div>
+  {% endif %}
+</section>
+<section class="manifesto">
+  <span class="manifesto-mark">✳</span>
+  <p>Life gets better<br>when we <span>show up.</span></p>
+  <span class="manifesto-caption">YOUR NEXT STORY STARTS IN PERSON</span>
+</section>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "events/base.html" %}
+{% block title %}Sign in · CodeAlpha{% endblock %}
+{% block content %}
+<section class="auth-wrap"><div class="auth-decoration"><span class="auth-orbit"></span><span class="auth-star">✳</span><div><span>YOUR PEOPLE ARE HERE</span><strong>Good to<br>see you.</strong></div></div>
+<div class="auth-panel"><div class="eyebrow"><span class="eyebrow-dot"></span> WELCOME BACK</div><h1>Pick up where<br>you left off.</h1><p>Sign in to manage your event registrations.</p>
+<form method="post" class="form-stack">{% csrf_token %}
+  {% if form.non_field_errors %}<div class="field-error">{{ form.non_field_errors|striptags }}</div>{% endif %}
+  {% for field in form %}<label class="field"><span>{{ field.label }}</span>{{ field }}{% if field.errors %}<small class="field-error">{{ field.errors|striptags }}</small>{% endif %}</label>{% endfor %}
+  <input type="hidden" name="next" value="{{ next }}">
+  <button class="button button-full" type="submit">Sign in <span>↗</span></button>
+</form><p class="auth-switch">New around here? <a href="{% url 'signup' %}">Create an account</a></p></div></section>
+{% endblock %}

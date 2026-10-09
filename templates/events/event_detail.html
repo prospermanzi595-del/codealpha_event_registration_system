@@ -1,0 +1,35 @@
+{% extends "events/base.html" %}
+{% block title %}{{ event.title }} · CodeAlpha Events{% endblock %}
+{% block content %}
+<section class="detail-wrap">
+  <a href="{% url 'home' %}#events" class="back-link">← &nbsp;All events</a>
+  <div class="detail-layout">
+    <article class="detail-main">
+      <div class="detail-art"><span class="event-category">{{ event.category }}</span><span class="detail-art-mark">✳</span><span class="visual-caption">GOOD ENERGY<br>GUARANTEED</span></div>
+      <div class="eyebrow"><span class="eyebrow-dot"></span> {{ event.starts_at|date:"l, F j · g:i A" }}</div>
+      <h1>{{ event.title }}</h1><p class="detail-summary">{{ event.summary }}</p>
+      <div class="detail-description">{{ event.description|linebreaks }}</div>
+    </article>
+    <aside class="booking-card">
+      <div class="booking-label">SAVE YOUR SPOT</div>
+      <div class="booking-detail"><span>WHEN</span><strong>{{ event.starts_at|date:"D, M j" }}</strong><small>{{ event.starts_at|date:"g:i A" }} – {{ event.ends_at|date:"g:i A" }}</small></div>
+      <div class="booking-detail"><span>WHERE</span><strong>{{ event.location }}</strong><small>{{ event.category }}</small></div>
+      {% if event.capacity %}<div class="booking-detail"><span>AVAILABILITY</span><strong>{% if event.spots_remaining %}{{ event.spots_remaining }} spots left{% else %}Sold out{% endif %}</strong></div>{% endif %}
+      {% if is_registered %}
+        <div class="success-panel">You’re on the list. See you there!</div>
+        <a class="button button-full button-outline" href="{% url 'my-registrations' %}">View my registrations</a>
+      {% elif event.is_registration_open %}
+        {% if user.is_authenticated %}
+          <form method="post" action="{% url 'register-event' event.slug %}">{% csrf_token %}<button class="button button-full" type="submit">Count me in <span>↗</span></button></form>
+        {% else %}
+          <a class="button button-full" href="{% url 'login' %}?next={{ request.path|urlencode }}">Sign in to reserve <span>↗</span></a>
+          <p class="booking-footnote">New around here? <a href="{% url 'signup' %}">Create an account</a></p>
+        {% endif %}
+      {% else %}
+        <div class="closed-panel">Registration is closed for this event.</div>
+      {% endif %}
+      <p class="booking-footnote">Free to attend · Be kind, come curious.</p>
+    </aside>
+  </div>
+</section>
+{% endblock %}
