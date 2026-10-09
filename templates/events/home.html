@@ -3,7 +3,6 @@
 {% block content %}
 <section class="hero">
   <div class="hero-content">
-    <div class="eyebrow"><span class="eyebrow-dot"></span> YOUR CITY, A LITTLE MORE CONNECTED</div>
     <h1>Make room for<br>something <span class="accent">remarkable.</span></h1>
     <p class="hero-copy">The people, ideas, and experiences worth showing up for. Find your next favorite thing.</p>
     <a class="button" href="#events">Explore what’s on <span aria-hidden="true">↓</span></a>
@@ -20,16 +19,16 @@
 </section>
 <section class="events-section" id="events">
   <div class="section-heading">
-    <div><div class="eyebrow"><span class="eyebrow-dot"></span> THE GOOD STUFF</div><h2>Coming up <span class="heading-light">near you.</span></h2></div>
+    <div><h2>Coming up <span class="heading-light">near you.</span></h2></div>
     <span class="section-count">{{ events|length|stringformat:"02d" }} <span>UP NEXT</span></span>
   </div>
   {% if events %}
   <div class="event-grid">
     {% for event in events %}
     <article class="event-card">
-      <a href="{% url 'event-detail' event.slug %}" class="event-visual visual-{{ forloop.counter0|divisibleby:4|yesno:'one,two' }}">
+      {% cycle "one" "two" "three" "four" as card_theme silent %}
+      <a href="{% url 'event-detail' event.slug %}" class="event-visual visual-{{ card_theme }}">
         <span class="event-category">{{ event.category }}</span>
-        <span class="visual-number">0{{ forloop.counter }}</span>
         <span class="visual-spark">✳</span>
         <span class="visual-caption">GOOD ENERGY<br>GUARANTEED</span>
       </a>

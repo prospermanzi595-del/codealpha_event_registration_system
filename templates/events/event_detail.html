@@ -6,7 +6,6 @@
   <div class="detail-layout">
     <article class="detail-main">
       <div class="detail-art"><span class="event-category">{{ event.category }}</span><span class="detail-art-mark">✳</span><span class="visual-caption">GOOD ENERGY<br>GUARANTEED</span></div>
-      <div class="eyebrow"><span class="eyebrow-dot"></span> {{ event.starts_at|date:"l, F j · g:i A" }}</div>
       <h1>{{ event.title }}</h1><p class="detail-summary">{{ event.summary }}</p>
       <div class="detail-description">{{ event.description|linebreaks }}</div>
     </article>
